@@ -6,20 +6,39 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 17:52:01 by maax              #+#    #+#             */
-/*   Updated: 2024/03/04 09:09:56 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/08 14:34:21 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	check_philo(t_philo *philo)
+void	check_philo_life(t_philo *philo)
 {
 	get_current_time(&philo->current_time);
 	if (philo->current_time >= philo->time_of_death)
 	{
-		printf("%ld %d died.\n", get_timestamp(philo), philo->id);
-		philo->status = DEAD;
+		print_message(philo, "died.\n", 1);
+		pthread_mutex_lock(&philo->data->dead);
 		philo->data->dead_philo = 1;
+		pthread_mutex_unlock(&philo->data->dead);
+	}
+}
+
+void	check_nb_meals(t_philo *philo)
+{
+	if (philo->nb_meals == philo->data->nb_each_philo_must_eat)
+	{
+		pthread_mutex_lock(&philo->data->full);
+		philo->data->all_full += 1;
+		pthread_mutex_unlock(&philo->data->full);
+		print_message(philo, "is full\n", 1);
+	}
+	if (philo->data->all_full == philo->data->nb_philos)
+	{
+		print_message(philo, "All philos have eaten their meals.\n", 3);
+		pthread_mutex_lock(&philo->data->dead);
+		philo->data->dead_philo = 1;
+		pthread_mutex_unlock(&philo->data->dead);
 	}
 }
 
@@ -34,7 +53,11 @@ void	*monitor_routine(void *struct_data)
 		i = 0;
 		while (i < data->nb_philos)
 		{
-			check_philo(&data->philos[i]);
+			check_philo_life(&data->philos[i]);
+			if (data->nb_each_philo_must_eat != -1)
+			{
+				check_nb_meals(&data->philos[i]);
+			}
 			i++;
 		}
 	}

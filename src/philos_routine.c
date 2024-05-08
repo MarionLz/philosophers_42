@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:34:02 by maax              #+#    #+#             */
-/*   Updated: 2024/03/14 17:25:53 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/08 14:28:26 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,21 @@ void	ft_eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
+		usleep(1000);
 		pthread_mutex_lock(philo->r_fork);
-		printf("%ld %d has taken a fork(R).\n", get_timestamp(philo), philo->id);
+		print_message(philo, "has taken a fork(R).\n", 1);
 		pthread_mutex_lock(philo->l_fork);
-		printf("%ld %d has taken a fork(L).\n", get_timestamp(philo), philo->id);
+		print_message(philo, "has taken a fork(L).\n", 1);
 	}
 	else
 	{
 		pthread_mutex_lock(philo->l_fork);
-		printf("%ld %d has taken a fork(L).\n", get_timestamp(philo), philo->id);
+		print_message(philo, "has taken a fork(L).\n", 1);
 		pthread_mutex_lock(philo->r_fork);
-		printf("%ld %d has taken a fork(R).\n", get_timestamp(philo), philo->id);
+		print_message(philo, "has taken a fork(R).\n", 1);
 	}
 	init_time_of_death(philo);
-	printf("%ld %d is eating.\n", get_timestamp(philo), philo->id);
+	print_message(philo, "is eating.\n", 1);
 	usleep(philo->data->time_to_eat * 1000);
 	if (philo->id % 2 == 0)
 	{
@@ -41,17 +42,24 @@ void	ft_eat(t_philo *philo)
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 	}
+	if (philo->data->nb_each_philo_must_eat != -1 && !philo->data->dead_philo)
+	{
+		pthread_mutex_lock(&philo->meals);
+		philo->nb_meals += 1;
+		pthread_mutex_unlock(&philo->meals);
+		print_message(philo,"has eaten", 2);
+	}
 }
 
 void	ft_sleep(t_philo *philo)
 {
-	printf("%ld %d is sleeping.\n", get_timestamp(philo), philo->id);
+	print_message(philo, "is sleeping.\n", 1);
 	usleep(philo->data->time_to_sleep * 1000);
 }
 
 void	ft_think(t_philo *philo)
 {
-	printf("%ld %d is thinking.\n", get_timestamp(philo), philo->id);
+	print_message(philo, "is thinking.\n", 1);
 }
 
 void	*philos_routine(void *struct_philo)

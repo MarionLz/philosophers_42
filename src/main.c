@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:48:25 by maax              #+#    #+#             */
-/*   Updated: 2024/03/04 10:13:26 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/08 10:27:43 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,32 @@ void	create_threads(t_data *data)
 	pthread_join(data->thread_monitor, NULL);
 }
 
+void	free_all(t_data *data)
+{
+	int	i;
+
+	i = 0;
+
+	while (i < data->nb_philos)
+	{
+		pthread_mutex_destroy(data->philos[i].l_fork);
+		pthread_mutex_destroy(data->philos[i].r_fork);
+		pthread_mutex_destroy(&data->philos[i].meals);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->dead);
+	pthread_mutex_destroy(&data->full);	
+	free(data->forks);
+	free(data->philos);
+}
+
+void	lonesome_cowboy(t_data *data)
+{
+	printf("0 1 has taken a fork.\n");
+	printf("%d 1 died.\n", data->time_to_die);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -70,10 +96,14 @@ int	main(int argc, char **argv)
 	if (!ft_check_args(argv))
 		return (printf("Error, arguments must be > 0 & can only contain digits.\n"), 1);
 	init_data(argc, argv, &data);
+	if (data.nb_philos == 1)
+	{
+		lonesome_cowboy(&data);
+		return (0);
+	}
 	if (!init_forks(&data) || !init_philos(&data))
 		return (EXIT_FAILURE);
 	create_threads(&data);
-	free(data.forks);
-	free(data.philos);
+	free_all(&data);
 	return (0);
 }

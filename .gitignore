@@ -1,12 +1,17 @@
 # Ignore executables
 *.exe
 *.out
+philo
 
 # Ignore object files
 *.o
 
 # Ignore librairies
 *.a
+
+#Ignore text files
+*.txt
+*.pdf
 
 #Ignore .vscode
 .vscode/

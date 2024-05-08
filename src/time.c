@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:48:25 by maax              #+#    #+#             */
-/*   Updated: 2024/03/04 10:13:23 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/01 15:19:21 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ long int	get_timestamp(t_philo *philo)
 {
 	long int timestamp;
 
+	get_current_time(&philo->current_time);
 	timestamp = philo->current_time - philo->data->start_time;
 	return(timestamp);
 }

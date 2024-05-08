@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:06:40 by maax              #+#    #+#             */
-/*   Updated: 2024/03/04 10:34:01 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/08 10:12:13 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	init_data(int argc, char **argv, t_data *data)
 	if (argc == 6)
 		data->nb_each_philo_must_eat = ft_atoi(argv[5]);
 	data->dead_philo = 0;
+	data->all_full = 0;
+	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->dead, NULL);
+	pthread_mutex_init(&data->full, NULL);
 }
 
 int	init_philos(t_data *data)
@@ -35,13 +39,15 @@ int	init_philos(t_data *data)
 	{
 		data->philos[i].data = data;
 		data->philos[i].id = i + 1;
-		data->philos[i].status = ALIVE;
 		data->philos[i].l_fork = &data->forks[i];
 		if (i == 0)
 			data->philos[i].r_fork = &data->forks[data->nb_philos - 1];
 		else
 			data->philos[i].r_fork = &data->forks[i - 1];
 		init_time_of_death(&data->philos[i]);
+		data->philos[i].current_time = 0;
+		data->philos[i].nb_meals = 0;
+		pthread_mutex_init(&data->philos[i].meals, NULL);
 		i++;
 	}
 	return (1);
