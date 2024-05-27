@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:34:02 by maax              #+#    #+#             */
-/*   Updated: 2024/05/08 14:28:26 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/27 12:31:25 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		usleep(1000);
+		
 		pthread_mutex_lock(philo->r_fork);
 		print_message(philo, "has taken a fork(R).\n", 1);
 		pthread_mutex_lock(philo->l_fork);
@@ -24,6 +24,7 @@ void	ft_eat(t_philo *philo)
 	}
 	else
 	{
+		usleep(2000);
 		pthread_mutex_lock(philo->l_fork);
 		print_message(philo, "has taken a fork(L).\n", 1);
 		pthread_mutex_lock(philo->r_fork);

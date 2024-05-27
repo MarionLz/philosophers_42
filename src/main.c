@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:48:25 by maax              #+#    #+#             */
-/*   Updated: 2024/05/08 10:27:43 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/27 12:19:59 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	lonesome_cowboy(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	
+
 	if (argc < 5 || argc > 6)
 		return (printf("Error, the program takes 5 or 6 arguments.\n"), 1);
 	if (!ft_check_args(argv))
