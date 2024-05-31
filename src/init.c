@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:06:40 by maax              #+#    #+#             */
-/*   Updated: 2024/05/27 12:17:20 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/31 09:38:44 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	init_philos(t_data *data)
 		init_time_of_death(&data->philos[i]);
 		data->philos[i].current_time = 0;
 		data->philos[i].nb_meals = 0;
+		data->philos[i].is_full = false;
 		pthread_mutex_init(&data->philos[i].meals, NULL);
 		i++;
 	}

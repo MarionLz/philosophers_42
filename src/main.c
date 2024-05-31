@@ -6,39 +6,11 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:48:25 by maax              #+#    #+#             */
-/*   Updated: 2024/05/27 12:19:59 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/31 10:03:31 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-int	ft_check_content_arg(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	ft_check_args(char **argv)
-{
-	int i;
-
-	i = 1;
-	while (argv[i])
-	{
-		if (ft_atoi(argv[i]) <= 0 || !ft_check_content_arg(argv[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 void	create_threads(t_data *data)
 {
@@ -91,10 +63,8 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (argc < 5 || argc > 6)
-		return (printf("Error, the program takes 5 or 6 arguments.\n"), 1);
-	if (!ft_check_args(argv))
-		return (printf("Error, arguments must be > 0 & can only contain digits.\n"), 1);
+	if (check_input(argc, argv) == 1)
+		return (1);
 	init_data(argc, argv, &data);
 	if (data.nb_philos == 1)
 	{

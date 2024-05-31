@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:49:26 by maax              #+#    #+#             */
-/*   Updated: 2024/05/27 12:17:21 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/31 10:05:22 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philo
 	long int		time_of_death;
 	long int		current_time;
 	int				nb_meals;
+	bool			is_full;
 	pthread_mutex_t meals;
 }	t_philo;
 
@@ -53,17 +54,44 @@ typedef struct s_data
 	pthread_mutex_t full;
 }	t_data;
 
-int			ft_atoi(const char *nptr);
-void		init_data(int argc, char **argv, t_data *data);
-int			init_philos(t_data *data);
-int			init_forks(t_data *data);
-void		init_time_of_death(t_philo *philo);
+/* MAIN */
+void	create_threads(t_data *data);
+void	free_all(t_data *data);
+void	lonesome_cowboy(t_data *data);
+int		main(int argc, char **argv);
+
+/* CHECK INPUT */
+int		check_content_arg(char *str);
+int		check_args(char **argv);
+int		check_input(int argc, char **argv);
+
+/* INIT */
+void	init_data(int argc, char **argv, t_data *data);
+int		init_philos(t_data *data);
+int		init_forks(t_data *data);
+void	init_time_of_death(t_philo *philo);
+
+/* PHILOS ROUTINE */
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
+void	*philos_routine(void *struct_philo);
+
+/* FORKS */
+void	take_forks(t_philo *philo);
+void	drop_forks(t_philo *philo);
+
+/* MONITOR */
+void	check_philo_life(t_philo *philo);
+void	check_nb_meals(t_philo *philo);
+void	*monitor_routine(void *struct_data);
+
+/* TIME */
 void		get_current_time(long int *current_time);
 long int	get_timestamp(t_philo *philo);
-void		*philos_routine(void *struct_philo);
-void		*monitor_routine(void *struct_data);
-long int	get_timestamp(t_philo *philo);
-void		get_current_time(long int *current_time);
-void		print_message(t_philo *philo, char *message, int flag);
+
+/* UTILS */
+int		ft_atoi(const char *nptr);
+void	print_message(t_philo *philo, char *message, int flag);
 
 # endif

@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:34:02 by maax              #+#    #+#             */
-/*   Updated: 2024/05/27 12:31:25 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/31 10:04:49 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,11 @@
 
 void	ft_eat(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		
-		pthread_mutex_lock(philo->r_fork);
-		print_message(philo, "has taken a fork(R).\n", 1);
-		pthread_mutex_lock(philo->l_fork);
-		print_message(philo, "has taken a fork(L).\n", 1);
-	}
-	else
-	{
-		usleep(2000);
-		pthread_mutex_lock(philo->l_fork);
-		print_message(philo, "has taken a fork(L).\n", 1);
-		pthread_mutex_lock(philo->r_fork);
-		print_message(philo, "has taken a fork(R).\n", 1);
-	}
+	take_forks(philo);
 	init_time_of_death(philo);
 	print_message(philo, "is eating.\n", 1);
 	usleep(philo->data->time_to_eat * 1000);
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_unlock(philo->r_fork);
-		pthread_mutex_unlock(philo->l_fork);
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->l_fork);
-		pthread_mutex_unlock(philo->r_fork);
-	}
+	drop_forks(philo);
 	if (philo->data->nb_each_philo_must_eat != -1 && !philo->data->dead_philo)
 	{
 		pthread_mutex_lock(&philo->meals);
