@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 09:46:25 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 10:38:37 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 14:20:07 by malauzie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ void	take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		usleep(1000);
+		usleep(3000);
 		pthread_mutex_lock(philo->l_fork);
-		print_message(philo, "has taken a fork(L).\n", 1);
-		usleep(1000);
+		print_message(philo, "has taken a fork. 🍴\n", 1);
+		usleep(3000);
 		pthread_mutex_lock(philo->r_fork);
-		print_message(philo, "has taken a fork(R).\n", 1);
+		print_message(philo, "has taken a fork. 🍴\n", 1);
 	}
 	else
 	{
 		pthread_mutex_lock(philo->r_fork);
-		print_message(philo, "has taken a fork(R).\n", 1);
+		print_message(philo, "has taken a fork. 🍴\n", 1);
 		pthread_mutex_lock(philo->l_fork);
-		print_message(philo, "has taken a fork(L).\n", 1);
+		print_message(philo, "has taken a fork. 🍴\n", 1);
 	}
 }
 

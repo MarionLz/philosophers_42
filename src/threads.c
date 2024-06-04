@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:47:13 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 11:50:16 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 12:04:55 by malauzie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,21 @@
 void	create_threads(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	get_current_time(&data->start_time);
 	while (i < data->nb_philos)
 	{
-		pthread_create(&data->philos[i].thread_philo, NULL, philos_routine, &data->philos[i]);
+		pthread_create(&data->philos[i].thread_philo, NULL,
+			philos_routine, &data->philos[i]);
 		i++;
 	}
 }
 
-void wait_threads(t_data *data)
+void	wait_threads(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < data->nb_philos)
 	{

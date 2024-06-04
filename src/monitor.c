@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 17:52:01 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 11:50:23 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 14:23:28 by malauzie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	check_philo_life(t_philo *philo)
 	get_current_time(&philo->current_time);
 	if (philo->current_time >= philo->time_of_death)
 	{
-		print_message(philo, "died.\n", 1);
+		print_message(philo, "died. 💀\n", 1);
 		pthread_mutex_lock(&philo->data->dead);
 		philo->data->stop_simulation = 1;
 		pthread_mutex_unlock(&philo->data->dead);
@@ -26,17 +26,18 @@ void	check_philo_life(t_philo *philo)
 
 void	check_nb_meals(t_philo *philo)
 {
-	if (philo->nb_meals == philo->data->nb_each_philo_must_eat && philo->is_full == false)
+	if (philo->nb_meals == philo->data->nb_each_philo_must_eat
+		&& philo->is_full == false)
 	{
 		pthread_mutex_lock(&philo->data->full);
 		philo->is_full = true;
 		philo->data->all_full += 1;
 		pthread_mutex_unlock(&philo->data->full);
-		print_message(philo, "is full\n", 1);
+		print_message(philo, "is full 🫄\n", 1);
 	}
 	if (philo->data->all_full == philo->data->nb_philos)
 	{
-		print_message(philo, "All philos have eaten their meals.\n", 3);
+		print_message(philo, "🎆🎆 All philos have eaten their meals. 🎆🎆\n", 3);
 		pthread_mutex_lock(&philo->data->dead);
 		philo->data->stop_simulation = 1;
 		pthread_mutex_unlock(&philo->data->dead);

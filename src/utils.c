@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:59:21 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 10:51:49 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 13:37:18 by malauzie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	print_message(t_philo *philo, char *message, int flag)
 	{
 		if (flag == 1)
 			printf("%ld %d %s", get_timestamp(philo), philo->id, message);
-		if (flag == 2)
-			printf("%ld %d %s %d/%d meals.\n", get_timestamp(philo), philo->id, message, philo->nb_meals, philo->data->nb_each_philo_must_eat);
 		if (flag == 3)
 			printf("%ld %s", get_timestamp(philo), message);
 	}

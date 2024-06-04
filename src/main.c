@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:48:25 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 11:50:13 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 13:38:36 by malauzie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	lonesome_cowboy(t_data *data)
 	get_current_time(&data->start_time);
 	get_current_time(&current_time);
 	timestamp = current_time - data->start_time;
-	printf("%ld 1 has taken a fork.\n", timestamp);
+	printf("%ld 1 has taken a fork. 🍴\n", timestamp);
 	usleep(data->time_to_die * 1000);
 	get_current_time(&current_time);
 	timestamp = current_time - data->start_time;
-	printf("%ld 1 died.\n", timestamp);
+	printf("%ld 1 died. 💀\n", timestamp);
 	free(data);
 }
 

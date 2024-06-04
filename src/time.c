@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:48:25 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 11:06:28 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 12:05:18 by malauzie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ long int	get_timestamp(t_philo *philo)
 
 	get_current_time(&philo->current_time);
 	timestamp = philo->current_time - philo->data->start_time;
-	return(timestamp);
+	return (timestamp);
 }
 
 void	init_time_of_death(t_philo *philo)
@@ -34,5 +34,6 @@ void	init_time_of_death(t_philo *philo)
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	philo->time_of_death = time.tv_sec * 1000 + time.tv_usec / 1000 + philo->data->time_to_die;
+	philo->time_of_death = time.tv_sec * 1000 + time.tv_usec / 1000
+		+ philo->data->time_to_die;
 }

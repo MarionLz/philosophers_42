@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:06:40 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 11:45:30 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 11:59:10 by malauzie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_data(int argc, char **argv, t_data *data)
 
 int	init_philos(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->philos = (t_philo *)malloc(data->nb_philos * sizeof(t_philo));
@@ -42,7 +42,7 @@ int	init_philos(t_data *data)
 		data->philos[i].data = data;
 		data->philos[i].id = i + 1;
 		data->philos[i].l_fork = &data->forks[i];
-		data->philos[i].r_fork = &data->forks[(i + 1)% data->nb_philos];
+		data->philos[i].r_fork = &data->forks[(i + 1) % data->nb_philos];
 		init_time_of_death(&data->philos[i]);
 		data->philos[i].current_time = 0;
 		data->philos[i].nb_meals = 0;
@@ -55,10 +55,10 @@ int	init_philos(t_data *data)
 
 int	init_forks(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	data->forks = (pthread_mutex_t *)malloc(data->nb_philos * sizeof(pthread_mutex_t));
+	data->forks = malloc(data->nb_philos * sizeof(pthread_mutex_t));
 	if (!data->forks)
 		return (0);
 	while (i < data->nb_philos)
