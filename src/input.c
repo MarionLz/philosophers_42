@@ -6,13 +6,13 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 09:54:20 by maax              #+#    #+#             */
-/*   Updated: 2024/05/31 09:57:47 by maax             ###   ########.fr       */
+/*   Updated: 2024/05/31 12:34:37 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	check_content_arg(char *str)
+bool	is_digit(char *str)
 {
 	int	i;
 
@@ -20,31 +20,28 @@ int	check_content_arg(char *str)
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (0);
+			return (false);
 		i++;
 	}
-	return (1);
+	return (true);
 }
 
-int	check_args(char **argv)
+bool	is_input_valid(int argc, char **argv)
 {
 	int i;
 
 	i = 1;
+	if (argc < 5 || argc > 6)
+		return (printf("Error, the program takes 5 or 6 arguments.\n"), false);
+	if (ft_atoi(argv[i]) <= 0)
+		return (printf("Error, the number of philosophers must be > 0.\n"), false);
 	while (argv[i])
 	{
-		if (ft_atoi(argv[i]) <= 0 || !check_content_arg(argv[i]))
-			return (0);
+		if (ft_atoi(argv[i]) < 0)
+			return (printf("Error, arguments must be >= 0\n"), false);
+		if (!is_digit(argv[i]))
+			return (printf("Error, arguments can only contain digits.\n"), false);
 		i++;
 	}
-	return (1);
-}
-
-int	check_input(int argc, char **argv)
-{
-	if (argc < 5 || argc > 6)
-		return (printf("Error, the program takes 5 or 6 arguments.\n"), 1);
-	if (!check_args(argv))
-		return (printf("Error, arguments must be > 0 & can only contain digits.\n"), 1);
-	return (0);
+	return (true);
 }

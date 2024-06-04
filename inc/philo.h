@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:49:26 by maax              #+#    #+#             */
-/*   Updated: 2024/05/31 10:05:22 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 11:49:38 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_each_philo_must_eat;
-	bool			dead_philo;
+	int				stop_simulation;
 	pthread_mutex_t dead;
 	pthread_t		thread_monitor;
 	t_philo			*philos;
@@ -61,15 +61,17 @@ void	lonesome_cowboy(t_data *data);
 int		main(int argc, char **argv);
 
 /* CHECK INPUT */
-int		check_content_arg(char *str);
-int		check_args(char **argv);
-int		check_input(int argc, char **argv);
+bool	is_input_valid(int argc, char **argv);
+bool	is_digit(char *str);
 
 /* INIT */
 void	init_data(int argc, char **argv, t_data *data);
 int		init_philos(t_data *data);
 int		init_forks(t_data *data);
-void	init_time_of_death(t_philo *philo);
+
+/* THREADS */
+void	create_threads(t_data *data);
+void wait_threads(t_data *data);
 
 /* PHILOS ROUTINE */
 void	ft_eat(t_philo *philo);
@@ -84,11 +86,12 @@ void	drop_forks(t_philo *philo);
 /* MONITOR */
 void	check_philo_life(t_philo *philo);
 void	check_nb_meals(t_philo *philo);
-void	*monitor_routine(void *struct_data);
+void	monitor(t_data *data);
 
 /* TIME */
 void		get_current_time(long int *current_time);
 long int	get_timestamp(t_philo *philo);
+void	init_time_of_death(t_philo *philo);
 
 /* UTILS */
 int		ft_atoi(const char *nptr);

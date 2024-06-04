@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:59:21 by maax              #+#    #+#             */
-/*   Updated: 2024/05/27 12:18:22 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 10:51:49 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_atoi(const char *nptr)
 void	print_message(t_philo *philo, char *message, int flag)
 {
 	pthread_mutex_lock(&philo->data->print);
-	if (!philo->data->dead_philo)
+	if (!philo->data->stop_simulation)
 	{
 		if (flag == 1)
 			printf("%ld %d %s", get_timestamp(philo), philo->id, message);

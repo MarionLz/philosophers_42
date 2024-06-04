@@ -6,7 +6,7 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 17:52:01 by maax              #+#    #+#             */
-/*   Updated: 2024/05/31 09:40:31 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 11:50:23 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_philo_life(t_philo *philo)
 	{
 		print_message(philo, "died.\n", 1);
 		pthread_mutex_lock(&philo->data->dead);
-		philo->data->dead_philo = 1;
+		philo->data->stop_simulation = 1;
 		pthread_mutex_unlock(&philo->data->dead);
 	}
 }
@@ -38,18 +38,16 @@ void	check_nb_meals(t_philo *philo)
 	{
 		print_message(philo, "All philos have eaten their meals.\n", 3);
 		pthread_mutex_lock(&philo->data->dead);
-		philo->data->dead_philo = 1;
+		philo->data->stop_simulation = 1;
 		pthread_mutex_unlock(&philo->data->dead);
 	}
 }
 
-void	*monitor_routine(void *struct_data)
+void	monitor(t_data *data)
 {
-	t_data *data;
 	int	i;
 
-	data = (t_data *)struct_data;
-	while (data->dead_philo == 0)
+	while (data->stop_simulation == 0)
 	{
 		i = 0;
 		while (i < data->nb_philos)
@@ -62,5 +60,4 @@ void	*monitor_routine(void *struct_data)
 			i++;
 		}
 	}
-	return (0);
 }

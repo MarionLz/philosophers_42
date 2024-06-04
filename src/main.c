@@ -6,39 +6,17 @@
 /*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:48:25 by maax              #+#    #+#             */
-/*   Updated: 2024/05/31 10:03:31 by maax             ###   ########.fr       */
+/*   Updated: 2024/06/04 11:50:13 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-void	create_threads(t_data *data)
-{
-	int	i;
-	
-	i = 0;
-	get_current_time(&data->start_time);
-	pthread_create(&data->thread_monitor, NULL, monitor_routine, data);
-	while (i < data->nb_philos)
-	{
-		pthread_create(&data->philos[i].thread_philo, NULL, philos_routine, &data->philos[i]);
-		i++;
-	}
-	i = 0;
-	while (i < data->nb_philos)
-	{
-		pthread_join(data->philos[i].thread_philo, NULL);
-		i++;
-	}
-	pthread_join(data->thread_monitor, NULL);
-}
 
 void	free_all(t_data *data)
 {
 	int	i;
 
 	i = 0;
-
 	while (i < data->nb_philos)
 	{
 		pthread_mutex_destroy(data->philos[i].l_fork);
@@ -48,32 +26,47 @@ void	free_all(t_data *data)
 	}
 	pthread_mutex_destroy(&data->print);
 	pthread_mutex_destroy(&data->dead);
-	pthread_mutex_destroy(&data->full);	
+	pthread_mutex_destroy(&data->full);
 	free(data->forks);
 	free(data->philos);
+	free(data);
 }
 
 void	lonesome_cowboy(t_data *data)
 {
-	printf("0 1 has taken a fork.\n");
-	printf("%d 1 died.\n", data->time_to_die);
+	long int	timestamp;
+	long int	current_time;
+
+	current_time = 0;
+	get_current_time(&data->start_time);
+	get_current_time(&current_time);
+	timestamp = current_time - data->start_time;
+	printf("%ld 1 has taken a fork.\n", timestamp);
+	usleep(data->time_to_die * 1000);
+	get_current_time(&current_time);
+	timestamp = current_time - data->start_time;
+	printf("%ld 1 died.\n", timestamp);
+	free(data);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
+	t_data	*data;
 
-	if (check_input(argc, argv) == 1)
+	if (!is_input_valid(argc, argv))
 		return (1);
-	init_data(argc, argv, &data);
-	if (data.nb_philos == 1)
+	data = malloc(sizeof(*data));
+	init_data(argc, argv, data);
+	if (data->nb_philos == 1)
 	{
-		lonesome_cowboy(&data);
+		lonesome_cowboy(data);
 		return (0);
 	}
-	if (!init_forks(&data) || !init_philos(&data))
-		return (EXIT_FAILURE);
-	create_threads(&data);
-	free_all(&data);
+	if (!init_forks(data) || !init_philos(data))
+		return (1);
+	create_threads(data);
+	monitor(data);
+	wait_threads(data);
+	free_all(data);
 	return (0);
 }
