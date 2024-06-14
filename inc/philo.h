@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:49:26 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 12:09:36 by malauzie         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:56:02 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_each_philo_must_eat;
-	int				stop_simulation;
+	bool			stop;
 	pthread_mutex_t	dead;
 	pthread_t		thread_monitor;
 	t_philo			*philos;
@@ -50,10 +50,10 @@ typedef struct s_data
 	pthread_mutex_t	print;
 	int				all_full;
 	pthread_mutex_t	full;
+	pthread_mutex_t	time;
 }	t_data;
 
 /* MAIN */
-void		free_all(t_data *data);
 void		lonesome_cowboy(t_data *data);
 int			main(int argc, char **argv);
 
@@ -84,6 +84,7 @@ void		drop_forks(t_philo *philo);
 void		check_philo_life(t_philo *philo);
 void		check_nb_meals(t_philo *philo);
 void		monitor(t_data *data);
+bool		stop_activity(t_philo *philo);
 
 /* TIME */
 void		get_current_time(long int *current_time);
@@ -93,5 +94,7 @@ void		init_time_of_death(t_philo *philo);
 /* UTILS */
 int			ft_atoi(const char *nptr);
 void		print_message(t_philo *philo, char *message, int flag);
+void		free_all(t_data *data);
+void		free_data(t_data *data);
 
 #endif

@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:48:25 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 13:38:36 by malauzie         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:55:22 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-void	free_all(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nb_philos)
-	{
-		pthread_mutex_destroy(data->philos[i].l_fork);
-		pthread_mutex_destroy(data->philos[i].r_fork);
-		pthread_mutex_destroy(&data->philos[i].meals);
-		i++;
-	}
-	pthread_mutex_destroy(&data->print);
-	pthread_mutex_destroy(&data->dead);
-	pthread_mutex_destroy(&data->full);
-	free(data->forks);
-	free(data->philos);
-	free(data);
-}
 
 void	lonesome_cowboy(t_data *data)
 {
@@ -46,7 +26,7 @@ void	lonesome_cowboy(t_data *data)
 	get_current_time(&current_time);
 	timestamp = current_time - data->start_time;
 	printf("%ld 1 died. 💀\n", timestamp);
-	free(data);
+	free_data(data);
 }
 
 int	main(int argc, char **argv)

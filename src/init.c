@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malauzie <malauzie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maax <maax@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:06:40 by maax              #+#    #+#             */
-/*   Updated: 2024/06/04 11:59:10 by malauzie         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:59:27 by maax             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ void	init_data(int argc, char **argv, t_data *data)
 		data->nb_each_philo_must_eat = ft_atoi(argv[5]);
 	else
 		data->nb_each_philo_must_eat = -1;
-	data->stop_simulation = 0;
+	data->stop = false;
 	data->all_full = 0;
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->dead, NULL);
 	pthread_mutex_init(&data->full, NULL);
+	pthread_mutex_init(&data->time, NULL);
 }
 
 int	init_philos(t_data *data)
